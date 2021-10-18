@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
 os.environ["QT_LOGGING_RULES"]= '*.debug=false;qt.qpa.*=false'
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
