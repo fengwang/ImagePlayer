@@ -1,6 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
+'''
+
+    ImagePlayer: playing with deep image models.
+
+    Copyright (C) 2021  Feng Wang
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+'''
+
 import os
 os.environ["QT_LOGGING_RULES"]= '*.debug=false;qt.qpa.*=false'
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
@@ -71,9 +93,6 @@ class ImagePlayer(QMainWindow):
         if not os.path.exists(self.user_model_path):
             os.makedirs( self.user_model_path )
 
-    # download a model from internet
-    # example: download_model( 'http://xxxxxx/xxxxx.h5', 'mymodel' )
-    # will download file, and save it to {model_path}/mymodel/xxxxx.h5
     def download_remote_model(self, model_name, model_url):
         model_path = os.path.join( self.user_model_path, model_name )
 
@@ -114,9 +133,6 @@ class ImagePlayer(QMainWindow):
         return tmp_png_file
 
 
-
-
-    # drag/drop image
     def dragEnterEvent(self, e):
         if e.mimeData().hasUrls():
             e.accept()
@@ -134,7 +150,6 @@ class ImagePlayer(QMainWindow):
     def wheelEvent(self, event):
         numDegrees = event.angleDelta() / 8.0
 
-        # seems only y degree matters
         if not numDegrees.isNull():
             x = numDegrees.x() / 150.0
             y = numDegrees.y() / 150.0
@@ -147,9 +162,6 @@ class ImagePlayer(QMainWindow):
             self._scale_image(new_scale)
 
         event.accept()
-
-
-    # mouse event
 
 
     def load_file(self, fileName, rescaling_flag=True):
@@ -186,13 +198,11 @@ class ImagePlayer(QMainWindow):
         if self._image.colorSpace().isValid():
             self._image.convertToColorSpace(QColorSpace.SRgb)
         self._image_label.setPixmap(QPixmap.fromImage(self._image))
-        #self._image_label.setAlignment(Qt.AlignCenter)
         self._scroll_area.setAlignment(Qt.AlignCenter)
         self._scale_factor = 1.0
 
         self._scroll_area.setVisible(True)
         self._print_act.setEnabled(True)
-        #self._fit_to_window_act.setEnabled(True)
         self._update_actions()
 
         if not self._fit_to_window_act.isChecked():
@@ -200,7 +210,6 @@ class ImagePlayer(QMainWindow):
 
     def _save_file(self, fileName):
 
-        # directly copy if the current file extension is same as the file to be saved
         _, current_extension = os.path.splitext( self.current_image_presented )
         _, new_extension = os.path.splitext( fileName )
         if (current_extension == new_extension ):
@@ -484,13 +493,6 @@ class ImagePlayer(QMainWindow):
         dialog.setAcceptMode(acceptMode)
         if acceptMode == QFileDialog.AcceptSave:
             dialog.setDefaultSuffix("png")
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     arg_parser = ArgumentParser(description="Image Viewer", formatter_class=RawTextHelpFormatter)
