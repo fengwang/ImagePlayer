@@ -3,7 +3,10 @@
 ImagePlayer is a free, open source image viewer bring deep learning image model to your desktop.
 
 
-![screenshot](./misc/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/screenshot.png)
+
+
+With ImagePlayer, everyone can benefit from deep learning, without being an expert.
 
 
 ## Dependencies (verified)
@@ -32,6 +35,17 @@ TODO
 ### Mac
 
 TODO
+
+
+## Models that have been integrated
+
+
++ [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN)
++ [StyleGan2](https://github.com/a312863063/generators-with-stylegan2)
++ [Yolo v5](https://ultralytics.com/yolov5)
+![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/yolo_screenshot.png)
+
+
 
 ## License
 
