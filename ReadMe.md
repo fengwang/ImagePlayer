@@ -1,6 +1,6 @@
 # ImagePlayer: playing with deep image models.
 
-ImagePlayer is a free, open source image viewer bring deep learning image model to your desktop.
+ImagePlayer is a free, open source image viewer bring deep learning image models to your desktop.
 
 
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/screenshot.png)
