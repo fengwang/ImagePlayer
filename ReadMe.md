@@ -20,6 +20,11 @@ With ImagePlayer, everyone can benefit from deep learning, without being an expe
 + numpy: _1.21.1_
 + imageio: _2.9.0_
 + scikit-learn: _1.0_
++ scipy: _1.7.1_
++ seaborn: _0.11.2_
++ matplotlib: _3.4.3_
++ pandas: _1.3.4_
++ Pillow: _8.4.0_
 
 ## Usage
 
