@@ -49,6 +49,8 @@ TODO
 + [StyleGan2](https://github.com/a312863063/generators-with-stylegan2)
 + [Yolo v5](https://ultralytics.com/yolov5)
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/yolo_screenshot.png)
++ [Deep Dream](https://en.wikipedia.org/wiki/DeepDream)
+![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/deepdream_screenshot.png)
 
 
 
