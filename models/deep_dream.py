@@ -104,7 +104,7 @@ def generate( image_widget, img ):
         deepdream_generator = create_model()
 
     random_file_prefix = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 13))
-    tmp_file = os.path.join( tempfile.gettempdir(), f'{random_file_prefix}_stylegan2_baby.png' )
+    tmp_file = os.path.join( tempfile.gettempdir(), f'{random_file_prefix}_deepdream.png' )
     generate_one( deepdream_generator, img, tmp_file )
     return tmp_file
 
