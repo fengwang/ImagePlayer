@@ -272,11 +272,13 @@ def resr( args_input, output_image_path, local_model_path ):
             extension = 'png'
 
         save_path = output_image_path
+
         if max_range == 65535:  # 16-bit image
             output = (output_img * 65535.0).round().astype(np.uint16)
         else:
             output = (output_img * 255.0).round().astype(np.uint8)
-        cv2.imwrite(save_path, output)
+
+        cv2.imwrite(save_path, output.astype(np.uint8))
 
 
 class RealESRGANer():
@@ -403,13 +405,69 @@ class RealESRGANer():
             self.output = self.output[:, :, 0:h - self.pre_pad * self.scale, 0:w - self.pre_pad * self.scale]
         return self.output
 
-
-
-
 import tempfile
 import os
 import sys
 import imageio
+
+#
+# @brief Partitioning input to an image array with 256x256 pixels
+#
+def partition( img ):
+    row, col, ch = img.shape
+
+    nrow = (row // 256) * 256 + 512
+    rl_padding = (nrow - row) // 2
+    rr_padding = nrow - row - rl_padding
+
+    ncol = (col // 256) * 256 + 512
+    cl_padding = (ncol - col) // 2
+    cr_padding = ncol - col - cl_padding
+
+    nimg = np.pad( img, [(rl_padding, rr_padding), (cl_padding, cr_padding), (0, 0)], mode='reflect' )
+
+    images_256x256 = []
+    rows, cols = (nrow//128) - 1, (ncol//128) - 1
+    imgs_256x256 = np.zeros( (rows, cols, 256, 256, 3) )
+    for r in range( rows ):
+        for c in range( cols ):
+            imgs_256x256[r][c] = nimg[r*128:r*128+256, c*128:c*128+256]
+
+    return imgs_256x256
+
+
+#
+# @brief Upscaling the image array with 256x256 pixels to 1024x1024 pixels.
+#
+def do_upscaling( local_model_path, tmp_file, images_256x256 ):
+    print( f'do upscaling with {tmp_file=} and {images_256x256.shape=}' )
+    row, col, *_ = images_256x256.shape
+    imgs_1kx1k = np.zeros( (row, col, 1024, 1024, 3) )
+    for r in range( row ):
+        for c in range( col ):
+            imageio.imwrite( tmp_file, np.asarray( images_256x256[r][c], dtype='uint8' ) )
+            resr( tmp_file, tmp_file, local_model_path )
+            imgs_1kx1k[r][c] = imageio.imread( tmp_file )
+    print( f'Got {imgs_1kx1k.shape=}' )
+    return imgs_1kx1k
+
+#
+# @brief Merge
+#
+def merge( images_1kx1k, row, col ):
+    print( f'Merging input 1kx1k images {images_1kx1k.shape} with {row=} and {col=}' )
+    rows, cols, *_ = images_1kx1k.shape
+    tmp_img = np.zeros( (rows*512, cols*512, 3) )
+    print( f'got tmp image {tmp_img.shape=}' )
+    for r in range( rows ):
+        for c in range( cols ):
+            tmp_img[r*512:r*512+512, c*512:c*512+512] = images_1kx1k[r, c, 256:768, 256:768, :]
+    pr = (rows*512 - row*4) // 2
+    pc = (cols*512 - col*4) // 2
+    print( f'got {pr=} and {pc=}' )
+    ans = tmp_img[pr:row*4+pr, pc:col*4+pc]
+    print( f'got ans {ans.shape}' )
+    return ans
 
 
 def implementation( image_widget ):
@@ -423,10 +481,19 @@ def implementation( image_widget ):
     img = imageio.imread( img_path )
     if len(img.shape) == 3  and img.shape[2] == 4:
         img = img[:,:,:3]
-    imageio.imwrite( img_path, img )
 
-    resr( img_path, tmp_file, local_model_path )
+    row, col, _ = img.shape
+    if ( row < 256 and col < 256 ):
+        imageio.imwrite( img_path, np.asarray(img, dtype='uint8') )
+        resr( img_path, tmp_file, local_model_path )
+    else:
+        images_256x256 = partition( img ) # large image from [r, c, 3] to [n, 256, 256, 3]
+        images_1kx1k = do_upscaling( local_model_path, tmp_file, images_256x256 ) # to [n, 1024, 1024, 3]
+        result_image = merge( images_1kx1k, row, col ) # to [r*4, c*4, 3]
+        imageio.imwrite( tmp_file, np.asarray(result_image, dtype='uint8') )
+
     image_widget.update_content_file( tmp_file )
+
 
 def interface():
     def detailed_implementation( image_widget ):
