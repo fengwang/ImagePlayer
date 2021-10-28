@@ -207,7 +207,6 @@ def resr( args_input, output_image_path, local_model_path ):
 
     for idx, path in enumerate(paths):
         imgname, extension = os.path.splitext(os.path.basename(path))
-        print('Testing', idx, imgname)
 
         # ------------------------------ read image ------------------------------ #
         img = cv2.imread(path, cv2.IMREAD_UNCHANGED).astype(np.float32)
@@ -440,7 +439,6 @@ def partition( img ):
 # @brief Upscaling the image array with 256x256 pixels to 1024x1024 pixels.
 #
 def do_upscaling( local_model_path, tmp_file, images_256x256 ):
-    print( f'do upscaling with {tmp_file=} and {images_256x256.shape=}' )
     row, col, *_ = images_256x256.shape
     imgs_1kx1k = np.zeros( (row, col, 1024, 1024, 3) )
     for r in range( row ):
@@ -448,25 +446,20 @@ def do_upscaling( local_model_path, tmp_file, images_256x256 ):
             imageio.imwrite( tmp_file, np.asarray( images_256x256[r][c], dtype='uint8' ) )
             resr( tmp_file, tmp_file, local_model_path )
             imgs_1kx1k[r][c] = imageio.imread( tmp_file )
-    print( f'Got {imgs_1kx1k.shape=}' )
     return imgs_1kx1k
 
 #
 # @brief Merge
 #
 def merge( images_1kx1k, row, col ):
-    print( f'Merging input 1kx1k images {images_1kx1k.shape} with {row=} and {col=}' )
     rows, cols, *_ = images_1kx1k.shape
     tmp_img = np.zeros( (rows*512, cols*512, 3) )
-    print( f'got tmp image {tmp_img.shape=}' )
     for r in range( rows ):
         for c in range( cols ):
             tmp_img[r*512:r*512+512, c*512:c*512+512] = images_1kx1k[r, c, 256:768, 256:768, :]
     pr = (rows*512 - row*4) // 2
     pc = (cols*512 - col*4) // 2
-    print( f'got {pr=} and {pc=}' )
     ans = tmp_img[pr:row*4+pr, pc:col*4+pc]
-    print( f'got ans {ans.shape}' )
     return ans
 
 
