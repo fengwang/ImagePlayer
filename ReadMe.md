@@ -47,6 +47,7 @@ TODO
 
 
 + [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN)
+![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/resr4x.png)
 + [StyleGan2](https://github.com/a312863063/generators-with-stylegan2)
 + [Yolo v5](https://ultralytics.com/yolov5)
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/yolo_screenshot.png)
