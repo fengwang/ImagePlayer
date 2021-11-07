@@ -9,7 +9,7 @@ ImagePlayer is a free, open source image viewer bring deep learning image models
 With ImagePlayer, everyone can benefit from deep learning, without being an expert.
 
 
-## Dependencies (verified)
+## Dependencies (tested)
 
 + tensorflow: _2.6.0, with GPU support_
 + pytorch: _1.9.1_
@@ -25,6 +25,7 @@ With ImagePlayer, everyone can benefit from deep learning, without being an expe
 + matplotlib: _3.4.3_
 + pandas: _1.3.4_
 + Pillow: _8.4.0_
++ onnxruntime: 1.9.1
 
 ## Usage
 
@@ -51,7 +52,8 @@ TODO
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/yolo_screenshot.png)
 + [Deep Dream](https://en.wikipedia.org/wiki/DeepDream)
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/deepdream_screenshot.png)
-
++ [EnlightenGAN](https://github.com/VITA-Group/EnlightenGAN)
+![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/enlightenGAN.png)
 
 
 ## License
