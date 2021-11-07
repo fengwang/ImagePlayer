@@ -115,7 +115,7 @@ class ImagePlayer(QMainWindow):
     def get_snapshot_file( self, index=None ):
         return self.get_new_snapshot_file( self.tmp_image_counter-1 )
 
-    # interface to plugins 2
+    # interface to plugins 2: a single file
     def update_content_file(self, fileName, rescaling_flag=False, in_a_new_window=True):
         if not in_a_new_window:
             self.load_file( fileName, rescaling_flag )
@@ -123,6 +123,11 @@ class ImagePlayer(QMainWindow):
             image_player = ImagePlayer()
             image_player.show()
             image_player.update_content_file( fileName, rescaling_flag=rescaling_flag, in_a_new_window=False );
+
+    # interface to plugins 3: many files
+    def update_content_files(self, fileNames, rescaling_flag=False, in_a_new_window=True):
+        for fileName in fileNames:
+            self.update_content_file( fileName, rescaling_flag, in_a_new_window )
 
 
     def get_new_snapshot_file( self, index=None ):
