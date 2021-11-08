@@ -476,7 +476,7 @@ def implementation( image_widget ):
         img = img[:,:,:3]
 
     row, col, _ = img.shape
-    if ( row < 256 and col < 256 ):
+    if ( row <= 256 and col <= 256 ):
         imageio.imwrite( img_path, np.asarray(img, dtype='uint8') )
         resr( img_path, tmp_file, local_model_path )
     else:
