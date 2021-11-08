@@ -93,6 +93,7 @@ class ImagePlayer(QMainWindow):
         if not os.path.exists(self.user_model_path):
             os.makedirs( self.user_model_path )
 
+    # download model files from github release
     def download_remote_model(self, model_name, model_url):
         model_path = os.path.join( self.user_model_path, model_name )
 
