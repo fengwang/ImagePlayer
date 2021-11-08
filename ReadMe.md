@@ -56,6 +56,8 @@ TODO
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/deepdream_screenshot.png)
 + [EnlightenGAN](https://github.com/VITA-Group/EnlightenGAN)
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/enlightenGAN.png)
++ [Photo2Cartoon](https://github.com/william0wang/photo2cartoon)
+![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/photo2cartoon.png)
 
 
 ## License
