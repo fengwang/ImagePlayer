@@ -58,6 +58,8 @@ TODO
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/enlightenGAN.png)
 + [Photo2Cartoon](https://github.com/william0wang/photo2cartoon)
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/photo2cartoon.png)
++ [AnimeGANv2](https://github.com/TachibanaYoshino/AnimeGANv2)
+![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/facepaint.png)
 
 
 ## License
