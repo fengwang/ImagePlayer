@@ -62,6 +62,11 @@ TODO
 ![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/facepaint.png)
 
 
+## Plugins
++ Sketch Effect
+![screenshot](https://raw.githubusercontent.com/fengwang/ImagePlayer/main/misc/sketch.png)
+
+
 ## License
 
 agplv3
